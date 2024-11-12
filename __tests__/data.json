@@ -1,33 +1,33 @@
 {
-    "data": {
-        "organization": {
-            "repository": {
-                "name": "test-0",
-                "pullRequests": {
-                    "nodes": [
-                        {
-                            "title": "feat/jira-5",
-                            "labels": {
-                                "nodes": [
-                                    {
-                                        "name": "feature"
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            "title": "Dependabot PR to upgrade dependencies",
-                            "labels": {
-                                "nodes": [
-                                    {
-                                        "name": "dependencies"
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }
+  "data": {
+    "organization": {
+      "repository": {
+        "name": "test-0",
+        "pullRequests": {
+          "nodes": [
+            {
+              "title": "feat/jira-5",
+              "labels": {
+                "nodes": [
+                  {
+                    "name": "feature"
+                  }
+                ]
+              }
+            },
+            {
+              "title": "Dependabot PR to upgrade dependencies",
+              "labels": {
+                "nodes": [
+                  {
+                    "name": "dependencies"
+                  }
+                ]
+              }
             }
+          ]
         }
+      }
     }
+  }
 }

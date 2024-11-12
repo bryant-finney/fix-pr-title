@@ -52,22 +52,25 @@ describe('Fixer', () => {
 
   const desc = ': Fix a thing'
   describe('apply()', () => {
-    const wrongCase = 'fOo-1234'
-    it(`fixes incorrect case: ${wrongCase}`, () => {
-      const fixer = new Fixer(prefixes, wrongCase.concat(desc))
-      expect(fixer.apply()).toEqual(wrongCase.toUpperCase().concat(desc))
+    const wrong = {
+      case: 'fOo-1234',
+      sep: 'FOO+5678'
+    }
+
+    it(`fixes incorrect case: ${wrong.case}`, () => {
+      const fixer = new Fixer(prefixes, wrong.case.concat(desc))
+      expect(fixer.apply()).toEqual(wrong.case.toUpperCase().concat(desc))
     })
 
-    const wrongSep = 'FOO+1234'
-    it(`fixes incorrect separator: ${wrongSep}`, () => {
-      const fixer = new Fixer(prefixes, wrongSep.concat(desc))
-      expect(fixer.apply()).toEqual(wrongSep.replace('+', '-').concat(desc))
+    it(`fixes incorrect separator: ${wrong.sep}`, () => {
+      const fixer = new Fixer(prefixes, wrong.sep.concat(desc))
+      expect(fixer.apply()).toEqual(wrong.sep.replace('+', '-').concat(desc))
     })
 
-    const multi = [wrongCase, wrongSep]
+    const multi = Object.values(wrong).join(', ')
     it(`detects multiple issue numbers: ${multi}`, () => {
       const fixer = new Fixer(prefixes, `${multi}`.concat(desc))
-      expect(fixer.apply()).toEqual('FOO-1234,FOO-1234: Fix a thing')
+      expect(fixer.apply()).toEqual('FOO-1234, FOO-5678: Fix a thing')
     })
   })
 })
