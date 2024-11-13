@@ -17,6 +17,7 @@ describe('Fixer', () => {
     })
   })
 
+  const desc = ': Fix a thing'
   describe('extract()', () => {
     const wrong = {
       case: 'fOo-1234',
@@ -25,7 +26,7 @@ describe('Fixer', () => {
     }
 
     it(`detects incorrect case: ${wrong.case}`, () => {
-      const fixer = new Fixer(prefixes, `${wrong.case} Fix a thing`)
+      const fixer = new Fixer(prefixes, wrong.case.concat(desc))
       expect(fixer.extract()?.slice(0, 3)).toEqual([
         wrong.case,
         ...wrong.case.split('-')
@@ -33,27 +34,27 @@ describe('Fixer', () => {
     })
 
     it(`detects incorrect separator: ${wrong.sep}`, () => {
-      const fixer = new Fixer(prefixes, `${wrong.sep} Fix a thing`)
+      const fixer = new Fixer(prefixes, wrong.sep.concat(desc))
       expect(fixer.extract()?.slice(0, 3)).toEqual([
         wrong.sep,
         ...wrong.sep.split('+')
       ])
     })
 
-    const multi = ['FOO-1234', 'BAR-567']
+    const multi = Object.values(wrong).join(', ')
+
     it(`detects multiple issue numbers: ${multi}`, () => {
       const fixer = new Fixer(prefixes, `${multi} Fix a thing`)
-      expect(fixer.extract()?.slice(0, 3)).toEqual(['FOO-1234', 'FOO', '1234'])
-      expect(fixer.extract()?.slice(0, 3)).toEqual(['BAR-567', 'BAR', '567'])
+      expect(fixer.extract()?.slice(0, 3)).toEqual(['fOo-1234', 'fOo', '1234'])
+      expect(fixer.extract()?.slice(0, 3)).toEqual(['FOO+5678', 'FOO', '5678'])
     })
 
     it(`enforces word boundaries at the start: ${wrong.prefix}`, () => {
-      const fixer = new Fixer(prefixes, `${wrong.prefix} Fix a thing`)
+      const fixer = new Fixer(prefixes, wrong.prefix.concat(desc))
       expect(fixer.extract()).toBeNull()
     })
   })
 
-  const desc = ': Fix a thing'
   describe('apply()', () => {
     const wrong = {
       case: 'fOo-1234',
