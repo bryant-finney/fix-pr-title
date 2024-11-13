@@ -83,6 +83,19 @@ some initial setup steps:
    ...
    ```
 
+#### VSCode Setup
+
+A baseline configuration for Visual Studio Code is included in this repository;
+to use it:
+
+```sh
+# Copy the configuration file to the root of the repository
+cp .vscode/action-pr-titles.code-workspace action-pr-titles.code-workspace
+
+# Open the workspace in VSCode
+code action-pr-titles.code-workspace
+```
+
 ### How To
 
 #### Update the Action Metadata
