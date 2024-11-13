@@ -18,21 +18,25 @@ describe('Fixer', () => {
   })
 
   describe('extract()', () => {
-    const wrongCase = 'fOo-1234'
-    it(`detects incorrect case: ${wrongCase}`, () => {
-      const fixer = new Fixer(prefixes, `${wrongCase} Fix a thing`)
+    const wrong = {
+      case: 'fOo-1234',
+      sep: 'FOO+5678',
+      prefix: 'lumbar 739'
+    }
+
+    it(`detects incorrect case: ${wrong.case}`, () => {
+      const fixer = new Fixer(prefixes, `${wrong.case} Fix a thing`)
       expect(fixer.extract()?.slice(0, 3)).toEqual([
-        wrongCase,
-        ...wrongCase.split('-')
+        wrong.case,
+        ...wrong.case.split('-')
       ])
     })
 
-    const wrongSep = 'FOO+1234'
-    it(`detects incorrect separator: ${wrongSep}`, () => {
-      const fixer = new Fixer(prefixes, `${wrongSep} Fix a thing`)
+    it(`detects incorrect separator: ${wrong.sep}`, () => {
+      const fixer = new Fixer(prefixes, `${wrong.sep} Fix a thing`)
       expect(fixer.extract()?.slice(0, 3)).toEqual([
-        wrongSep,
-        ...wrongSep.split('+')
+        wrong.sep,
+        ...wrong.sep.split('+')
       ])
     })
 
@@ -43,9 +47,8 @@ describe('Fixer', () => {
       expect(fixer.extract()?.slice(0, 3)).toEqual(['BAR-567', 'BAR', '567'])
     })
 
-    const badStart = 'lumbar 739'
-    it(`enforces word boundaries at the start: ${badStart}`, () => {
-      const fixer = new Fixer(prefixes, `${badStart} Fix a thing`)
+    it(`enforces word boundaries at the start: ${wrong.prefix}`, () => {
+      const fixer = new Fixer(prefixes, `${wrong.prefix} Fix a thing`)
       expect(fixer.extract()).toBeNull()
     })
   })
@@ -68,7 +71,7 @@ describe('Fixer', () => {
     })
 
     const multi = Object.values(wrong).join(', ')
-    it(`detects multiple issue numbers: ${multi}`, () => {
+    it(`fixes multiple issue numbers: ${multi}`, () => {
       const fixer = new Fixer(prefixes, `${multi}`.concat(desc))
       expect(fixer.apply()).toEqual('FOO-1234, FOO-5678: Fix a thing')
     })
