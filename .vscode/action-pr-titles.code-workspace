@@ -1,0 +1,39 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "eslint.enable": true,
+    "jest.runMode": {
+      "type": "watch"
+    },
+    "eslint.format.enable": true,
+    "eslint.lintTask.enable": true,
+    "eslint.options": {
+      "overrideConfigFile": ".github/linters/.eslintrc.yml"
+    }
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "command": "node",
+        "request": "launch",
+        "type": "node-terminal",
+      }
+    ]
+  },
+  "extensions": {
+    "recommendations": [
+      "dbaeumer.vscode-eslint",
+      "ms-vscode.vscode-typescript-next",
+      "orta.vscode-jest",
+      "pmneo.tsimporter",
+      "stringham.move-ts",
+      "christian-kohler.path-intellisense",
+      "esbenp.prettier-vscode"
+    ]
+  }
+}
