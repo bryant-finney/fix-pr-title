@@ -12,13 +12,12 @@ describe('data', () => {
 })
 
 // TODO: add more data
-describe('fix() to data', () => {
+describe('fix() when run on data', () => {
   const titles = data.organization.repository.pullRequests.nodes
-    .slice(0, 20)
     .map(pr => pr.title)
     .map(title => new Fixer(prefixes, title).fix())
 
-  it('corrects the first 20 PR titles', () => {
+  it('corrects the PR titles', () => {
     expect(titles).toMatchSnapshot()
   })
 })

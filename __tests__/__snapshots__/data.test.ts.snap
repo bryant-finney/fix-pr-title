@@ -1,20 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`apply (titles 0-19) corrects the first 20 PR titles 1`] = `
-[
-  "feat/JIRA-5",
-  "Dependabot PR to upgrade dependencies",
-]
-`;
-
-exports[`apply corrects the first 20 PR titles 1`] = `
-[
-  "feat/JIRA-5",
-  "Dependabot PR to upgrade dependencies",
-]
-`;
-
-exports[`fix() to data corrects the first 20 PR titles 1`] = `
+exports[`fix() when run on data corrects the PR titles 1`] = `
 [
   "feat/JIRA-5",
   "Dependabot PR to upgrade dependencies",
