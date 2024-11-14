@@ -30,7 +30,7 @@ class Fixer {
     return this.re.exec(this.raw)
   }
 
-  apply(): string {
+  fix(): string {
     return this.raw.replace(this.re, (_, prefix: string, number: string) =>
       prefix.toUpperCase().concat('-', number)
     )
