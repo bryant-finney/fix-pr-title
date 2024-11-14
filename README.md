@@ -83,7 +83,7 @@ some initial setup steps:
    ...
    ```
 
-#### VSCode Setup
+#### Visual Studio Code Setup
 
 A baseline configuration for Visual Studio Code is included in this repository;
 to use it:
@@ -92,7 +92,7 @@ to use it:
 # Copy the configuration file to the root of the repository
 cp .vscode/action-pr-titles.code-workspace action-pr-titles.code-workspace
 
-# Open the workspace in VSCode
+# Open the workspace in Visual Studio Code
 code action-pr-titles.code-workspace
 ```
 
