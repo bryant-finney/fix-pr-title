@@ -16,10 +16,5 @@
     "strict": true,
     "target": "ES2022"
   },
-  "exclude": [
-    "./dist",
-    "./node_modules",
-    "./__tests__",
-    "./coverage"
-  ]
+  "exclude": ["./dist", "./node_modules", "./__tests__", "./coverage"]
 }
