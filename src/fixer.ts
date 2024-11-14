@@ -26,7 +26,7 @@ class Fixer {
    *
    * @returns An array of issue keys or null if no matches are found.
    */
-  extract(): string[] | null {
+  check(): string[] | null {
     return this.re.exec(this.raw)
   }
 
