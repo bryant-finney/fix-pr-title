@@ -84,4 +84,11 @@ describe('fix()', () => {
     const title = 'foo 1234 Fix a thing'
     expect(await fix(prefixes, title)).toEqual('FOO-1234 Fix a thing')
   })
+
+  it('throws an error when no issues are found', async () => {
+    const title = 'Fix a thing'
+    await expect(fix(prefixes, title)).rejects.toThrow(
+      'No issue keys found: Fix a thing'
+    )
+  })
 })

@@ -52,7 +52,13 @@ class Fixer {
  * @throws {Error} If no issue keys are found
  */
 async function fix(prefixes: string[], title: string): Promise<string> {
-  return new Promise(resolve => resolve(new Fixer(prefixes, title).fix()))
+  return new Promise((resolve, reject) => {
+    const fixer = new Fixer(prefixes, title)
+    if (!fixer.check())
+      return reject(new Error(`No issue keys found: ${fixer.raw}`))
+
+    return resolve(fixer.fix())
+  })
 }
 
 export { Fixer, fix }
