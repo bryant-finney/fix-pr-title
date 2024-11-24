@@ -2,7 +2,7 @@
  * Unit tests for src/fixer.ts
  */
 
-import { Fixer } from '../src/fixer'
+import { Fixer, fix } from '../src/fixer'
 import { expect } from '@jest/globals'
 
 const prefixes = ['FOO', 'BAR', 'BAZ']
@@ -76,5 +76,12 @@ describe('Fixer', () => {
       const fixer = new Fixer(prefixes, `${multi}`.concat(desc))
       expect(fixer.fix()).toEqual('FOO-1234, FOO-5678: Fix a thing')
     })
+  })
+})
+
+describe('fix()', () => {
+  test('corrects an example title', async () => {
+    const title = 'foo 1234 Fix a thing'
+    expect(await fix(prefixes, title)).toEqual('FOO-1234 Fix a thing')
   })
 })

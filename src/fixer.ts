@@ -37,4 +37,8 @@ class Fixer {
   }
 }
 
-export { Fixer }
+async function fix(prefixes: string[], title: string): Promise<string> {
+  return new Promise(resolve => resolve(new Fixer(prefixes, title).fix()))
+}
+
+export { Fixer, fix }
