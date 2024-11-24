@@ -80,7 +80,7 @@ describe('Fixer', () => {
 })
 
 describe('fix()', () => {
-  test('corrects an example title', async () => {
+  it('corrects an example title', async () => {
     const title = 'foo 1234 Fix a thing'
     expect(await fix(prefixes, title)).toEqual('FOO-1234 Fix a thing')
   })
