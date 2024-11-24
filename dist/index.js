@@ -25626,6 +25626,71 @@ module.exports = {
 
 /***/ }),
 
+/***/ 1343:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Fixer = void 0;
+exports.fix = fix;
+/**
+ * @class Fixer
+ * If possible, correct improperly formatted issue keys in the given string.
+ *
+ * @param prefixes A list of prefixes
+ * @param raw The string to check and fix
+ */
+class Fixer {
+    prefixes;
+    raw;
+    re;
+    constructor(prefixes, raw) {
+        this.prefixes = prefixes;
+        this.raw = raw;
+        this.re = new RegExp(`(?<![a-z])(${prefixes.join('|')})[^A-Z0-9](\\d+)`, 'gi');
+    }
+    /**
+     * Return a single regex match from the PR title.
+     *
+     * When multiple matches are found, each invocation returns the subsequent match.
+     *
+     * @returns An array of issue keys or null if no matches are found.
+     */
+    check() {
+        return this.re.exec(this.raw);
+    }
+    /**
+     * Correct improperly formatted issue keys.
+     *
+     * @returns The corrected string.
+     */
+    fix() {
+        return this.raw.replace(this.re, (_, prefix, number) => prefix.toUpperCase().concat('-', number));
+    }
+}
+exports.Fixer = Fixer;
+/**
+ * Fix the issue keys in the PR title.
+ *
+ * @param prefixes An array of valid issue prefix strings
+ * @param title The title of the PR to fix
+ *
+ * @returns The fixed PR title
+ * @throws {Error} If no issue keys are found
+ */
+async function fix(prefixes, title) {
+    return new Promise((resolve, reject) => {
+        const fixer = new Fixer(prefixes, title);
+        if (!fixer.check())
+            return reject(new Error(`No issue keys found: ${fixer.raw}`));
+        return resolve(fixer.fix());
+    });
+}
+
+
+/***/ }),
+
 /***/ 1730:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -25657,52 +25722,23 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.run = run;
 const core = __importStar(__nccwpck_require__(7484));
-const wait_1 = __nccwpck_require__(910);
+const fixer_1 = __nccwpck_require__(1343);
 /**
  * The main function for the action.
  * @returns {Promise<void>} Resolves when the action is complete.
  */
 async function run() {
     try {
-        const ms = core.getInput('milliseconds');
-        // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
-        core.debug(`Waiting ${ms} milliseconds ...`);
-        // Log the current timestamp, wait, then log the new timestamp
-        core.debug(new Date().toTimeString());
-        await (0, wait_1.wait)(parseInt(ms, 10));
-        core.debug(new Date().toTimeString());
-        // Set outputs for other workflow steps to use
-        core.setOutput('time', new Date().toTimeString());
+        const title = core.getInput('title');
+        const prefixes = core.getInput('prefixes').split(',');
+        const fixed = await (0, fixer_1.fix)(prefixes, title);
+        core.setOutput('title', fixed);
+        core.setOutput('fixed', fixed !== title);
     }
     catch (error) {
-        // Fail the workflow run if an error occurs
         if (error instanceof Error)
             core.setFailed(error.message);
     }
-}
-
-
-/***/ }),
-
-/***/ 910:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.wait = wait;
-/**
- * Wait for a number of milliseconds.
- * @param milliseconds The number of milliseconds to wait.
- * @returns {Promise<string>} Resolves with 'done!' after the wait is over.
- */
-async function wait(milliseconds) {
-    return new Promise(resolve => {
-        if (isNaN(milliseconds)) {
-            throw new Error('milliseconds not a number');
-        }
-        setTimeout(() => resolve('done!'), milliseconds);
-    });
 }
 
 
