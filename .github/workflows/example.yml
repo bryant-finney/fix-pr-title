@@ -1,3 +1,4 @@
+name: Example
 on:
   pull_request:
     types: [edited, opened]
@@ -12,7 +13,7 @@ jobs:
       PR_NUM: ${{ github.event.number }}
       GH_TOKEN: ${{ github.token }}
 
-    name: Fix PR Title (example)
+    name: Fix PR Title
     runs-on: ubuntu-latest
 
     steps:
