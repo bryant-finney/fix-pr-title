@@ -18,10 +18,12 @@ An example of a minimal workflow is provided in
 [`.github/workflows/example.yml`](./.github/workflows/example.yml).
 
 1. Ensure the following permissions are set for the job:
+
    ```yaml
    permissions:
      pull-requests: write
    ```
+
 2. Add the following two steps to a job in your workflow:
 
    ```yaml
