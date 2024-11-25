@@ -1,5 +1,6 @@
 on:
   pull_request:
+    types: [edited, opened]
 
 permissions:
   contents: read
