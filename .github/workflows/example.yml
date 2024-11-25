@@ -4,28 +4,19 @@ on:
     # trigger this workflow whenever a PR is opened or edited
     types: [edited, opened]
 
-permissions:
-  contents: read
-
 jobs:
   example:
     name: Fix PR Title
 
     permissions:
-      # TODO: remove after v1 is released
-      contents: read
-
       # write permissions are required in order to correct the PR title
       pull-requests: write
 
     runs-on: ubuntu-latest
 
     steps:
-      # TODO: remove after v1 is released
-      - uses: actions/checkout@v4
       - id: fix
-        # TODO: update ref after v1 is released
-        uses: ./
+        uses: bryant-finney/fix-pr-title@v1
         with:
           title: ${{ github.event.pull_request.title }}
           prefixes: foo,bar,baz
