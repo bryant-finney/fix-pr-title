@@ -9,6 +9,7 @@ permissions:
 jobs:
   example:
     env:
+      PR_NUM: ${{ github.event.number }}
       GH_TOKEN: ${{ github.token }}
 
     name: Fix PR Title (example)
@@ -23,4 +24,4 @@ jobs:
           prefixes: foo,bar,baz
 
       - if: ${{ steps.fix.outputs.fixed == 'true' }}
-        run: gh pr edit --title "${{ steps.fix.outputs.title }}"
+        run: gh pr edit "$PR_NUM" --title "${{ steps.fix.outputs.title }}"
