@@ -12,11 +12,7 @@ import * as main from '../src/main'
 // Mock the action's main function
 const runMock = jest.spyOn(main, 'run')
 
-// Other utilities
-const timeRegex = /^\d{2}:\d{2}:\d{2}/
-
 // Mock the GitHub Actions core library
-let debugMock: jest.SpiedFunction<typeof core.debug>
 let errorMock: jest.SpiedFunction<typeof core.error>
 let getInputMock: jest.SpiedFunction<typeof core.getInput>
 let setFailedMock: jest.SpiedFunction<typeof core.setFailed>
@@ -26,19 +22,19 @@ describe('action', () => {
   beforeEach(() => {
     jest.clearAllMocks()
 
-    debugMock = jest.spyOn(core, 'debug').mockImplementation()
     errorMock = jest.spyOn(core, 'error').mockImplementation()
     getInputMock = jest.spyOn(core, 'getInput').mockImplementation()
     setFailedMock = jest.spyOn(core, 'setFailed').mockImplementation()
     setOutputMock = jest.spyOn(core, 'setOutput').mockImplementation()
   })
 
-  it('sets the time output', async () => {
-    // Set the action's inputs as return values from core.getInput()
+  it('requires prefixes and a title as inputs', async () => {
     getInputMock.mockImplementation(name => {
       switch (name) {
-        case 'milliseconds':
-          return '500'
+        case 'title':
+          return 'jira 1234 Fix a thing'
+        case 'prefixes':
+          return 'jira'
         default:
           return ''
       }
@@ -46,31 +42,39 @@ describe('action', () => {
 
     await main.run()
     expect(runMock).toHaveReturned()
-
-    // Verify that all of the core library functions were called correctly
-    expect(debugMock).toHaveBeenNthCalledWith(1, 'Waiting 500 milliseconds ...')
-    expect(debugMock).toHaveBeenNthCalledWith(
-      2,
-      expect.stringMatching(timeRegex)
-    )
-    expect(debugMock).toHaveBeenNthCalledWith(
-      3,
-      expect.stringMatching(timeRegex)
-    )
-    expect(setOutputMock).toHaveBeenNthCalledWith(
-      1,
-      'time',
-      expect.stringMatching(timeRegex)
-    )
-    expect(errorMock).not.toHaveBeenCalled()
   })
 
-  it('sets a failed status', async () => {
-    // Set the action's inputs as return values from core.getInput()
+  it('sets "title" and "fixed" as outputs', async () => {
     getInputMock.mockImplementation(name => {
       switch (name) {
-        case 'milliseconds':
-          return 'this is not a number'
+        case 'title':
+          return 'jira 1234 Fix a thing'
+        case 'prefixes':
+          return 'jira'
+        default:
+          return ''
+      }
+    })
+
+    await main.run()
+    expect(runMock).toHaveReturned()
+    expect(setOutputMock).toHaveBeenNthCalledWith(
+      1,
+      'title',
+      'JIRA-1234 Fix a thing'
+    )
+    expect(setOutputMock).toHaveBeenNthCalledWith(2, 'fixed', true)
+  })
+
+  it('sets a failed status when a valid prefix is missing', async () => {
+    const title = 'JIRA-1234: Fix a thing'
+
+    getInputMock.mockImplementation(name => {
+      switch (name) {
+        case 'title':
+          return title
+        case 'prefixes':
+          return 'dne,foo,bar'
         default:
           return ''
       }
@@ -79,10 +83,9 @@ describe('action', () => {
     await main.run()
     expect(runMock).toHaveReturned()
 
-    // Verify that all of the core library functions were called correctly
     expect(setFailedMock).toHaveBeenNthCalledWith(
       1,
-      'milliseconds not a number'
+      `No issue keys found: ${title}`
     )
     expect(errorMock).not.toHaveBeenCalled()
   })

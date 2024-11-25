@@ -1,23 +1,26 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Action: PR Titles'
+description: Check (and potentially fix) PR titles
+author: Bryant Finney <bryant.finney@outlook.com>
 
-# Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
-  icon: 'heart'
-  color: 'red'
+  icon: git-pull-request
+  color: blue
 
-# Define your inputs here.
 inputs:
-  milliseconds:
-    description: 'Your input description here'
+  title:
+    description: The PR title to check (and potentially fix)
     required: true
-    default: '1000'
 
-# Define your outputs here.
+  prefixes:
+    description: A comma-separated list of valid prefixes
+    required: true
+
 outputs:
-  time:
-    description: 'Your output description here'
+  title:
+    description: The PR title after applying fixes
+
+  fixed:
+    description: "'true' if the title was fixed; 'false' otherwise"
 
 runs:
   using: node20
