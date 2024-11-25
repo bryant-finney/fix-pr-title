@@ -24,7 +24,7 @@ An example of a minimal workflow is provided in
      pull-requests: write
    ```
 
-2. Add the following two steps to a job in your workflow:
+1. Add the following two steps to a job in your workflow:
 
    ```yaml
    - id: fix
