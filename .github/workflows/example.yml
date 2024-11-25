@@ -4,6 +4,9 @@ on:
     # trigger this workflow whenever a PR is opened or edited
     types: [edited, opened]
 
+permissions:
+  contents: read
+
 jobs:
   example:
     name: Fix PR Title

@@ -1,10 +1,10 @@
+# Fix PR Title V1
+
 [![GitHub Super-Linter](https://github.com/bryant-finney/fix-pr-title/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
 ![CI](https://github.com/bryant-finney/fix-pr-title/actions/workflows/ci.yml/badge.svg)
 [![Check dist/](https://github.com/bryant-finney/fix-pr-title/actions/workflows/check-dist.yml/badge.svg)](https://github.com/actions/typescript-action/actions/workflows/check-dist.yml)
 [![CodeQL](https://github.com/bryant-finney/fix-pr-title/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/bryant-finney/fix-pr-title/actions/workflows/codeql-analysis.yml)
 [![Coverage](./badges/coverage.svg)](./badges/coverage.svg)
-
-# Fix PR Title V1
 
 This action ensures PR titles include well-formatted Jira issue keys.
 
@@ -31,7 +31,7 @@ An example of a minimal workflow is provided in
        # Check (and potentially fix) this string (required)
        title: ${{ github.event.pull_request.title }}
 
-       # Specify which jira issue prefixes to enforce (required)
+       # Specify which Jira issue prefixes to enforce (required)
        prefixes: foo,bar,baz
 
    # the second step only runs if the first step made changes
@@ -55,7 +55,7 @@ See [`action.yml`](./action.yml).
 | Name       | Description                                                    | Required |
 | ---------- | -------------------------------------------------------------- | -------- |
 | `title`    | The PR title to check (and potentially fix)                    | Yes      |
-| `prefixes` | A comma-separated list of valid jira issue prefixes to enforce | Yes      |
+| `prefixes` | A comma-separated list of valid Jira issue prefixes to enforce | Yes      |
 
 ### Outputs
 
