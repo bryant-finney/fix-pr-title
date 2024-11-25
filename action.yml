@@ -14,7 +14,7 @@ inputs:
     required: true
 
   prefixes:
-    description: A comma-separated list of valid issue prefixes to look for
+    description: A comma-separated list of valid jira issue prefixes to enforce
     required: true
 
 outputs:
