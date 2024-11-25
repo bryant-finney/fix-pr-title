@@ -1,0 +1,25 @@
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  example:
+    env:
+      GH_TOKEN: ${{ github.token }}
+
+    name: Fix PR Title (example)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - id: fix
+        uses: ./
+        with:
+          title: ${{ github.event.pull_request.title }}
+          prefixes: foo,bar,baz
+
+      - if: ${{ steps.fix.outputs.fixed == 'true' }}
+        run: gh pr edit --title "${{ steps.fix.outputs.title }}"
