@@ -1,10 +1,10 @@
-# Action: PR Titles
-
-[![GitHub Super-Linter](https://github.com/bryant-finney/action-pr-titles/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
-![CI](https://github.com/bryant-finney/action-pr-titles/actions/workflows/ci.yml/badge.svg)
-[![Check dist/](https://github.com/bryant-finney/action-pr-titles/actions/workflows/check-dist.yml/badge.svg)](https://github.com/actions/typescript-action/actions/workflows/check-dist.yml)
-[![CodeQL](https://github.com/bryant-finney/action-pr-titles/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/bryant-finney/action-pr-titles/actions/workflows/codeql-analysis.yml)
+[![GitHub Super-Linter](https://github.com/bryant-finney/fix-pr-title/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
+![CI](https://github.com/bryant-finney/fix-pr-title/actions/workflows/ci.yml/badge.svg)
+[![Check dist/](https://github.com/bryant-finney/fix-pr-title/actions/workflows/check-dist.yml/badge.svg)](https://github.com/actions/typescript-action/actions/workflows/check-dist.yml)
+[![CodeQL](https://github.com/bryant-finney/fix-pr-title/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/bryant-finney/fix-pr-title/actions/workflows/codeql-analysis.yml)
 [![Coverage](./badges/coverage.svg)](./badges/coverage.svg)
+
+# Fix PR Title V1
 
 Ensure PR titles include well-formatted Jira issue keys.
 
@@ -90,10 +90,10 @@ to use it:
 
 ```sh
 # Copy the configuration file to the root of the repository
-cp .vscode/action-pr-titles.code-workspace action-pr-titles.code-workspace
+cp .vscode/fix-pr-title.code-workspace fix-pr-title.code-workspace
 
 # Open the workspace in Visual Studio Code
-code action-pr-titles.code-workspace
+code fix-pr-title.code-workspace
 ```
 
 ### How To
