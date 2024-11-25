@@ -1,16 +1,16 @@
 {
-  "name": "action-pr-titles",
+  "name": "fix-pr-title",
   "description": "Ensure PR titles include well-formatted Jira issue keys.",
   "version": "0.0.0",
-  "author": "",
+  "author": "Bryant Finney <bryant.finney@outlook.com>",
   "private": true,
-  "homepage": "https://github.com/bryant-finney/action-pr-titles",
+  "homepage": "https://github.com/bryant-finney/fix-pr-title",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bryant-finney/action-pr-titles.git"
+    "url": "git+https://github.com/bryant-finney/fix-pr-title.git"
   },
   "bugs": {
-    "url": "https://github.com/bryant-finney/action-pr-titles/issues"
+    "url": "https://github.com/bryant-finney/fix-pr-title/issues"
   },
   "keywords": [
     "actions",

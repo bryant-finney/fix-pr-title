@@ -1,5 +1,7 @@
-name: 'Action: PR Titles'
-description: Check (and potentially fix) PR titles
+name: Fix PR Title
+description:
+  Check (and potentially fix) a PR title, ensuring it includes a valid jira
+  issue key
 author: Bryant Finney <bryant.finney@outlook.com>
 
 branding:
@@ -12,7 +14,7 @@ inputs:
     required: true
 
   prefixes:
-    description: A comma-separated list of valid prefixes
+    description: A comma-separated list of valid jira issue prefixes to enforce
     required: true
 
 outputs:

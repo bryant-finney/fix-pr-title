@@ -1,0 +1,41 @@
+name: Example
+on:
+  pull_request:
+    # trigger this workflow whenever a PR is opened or edited
+    types: [edited, opened]
+
+permissions:
+  contents: read
+
+jobs:
+  example:
+    name: Fix PR Title
+
+    permissions:
+      # TODO: remove after v1 is released
+      contents: read
+
+      # write permissions are required in order to correct the PR title
+      pull-requests: write
+
+    runs-on: ubuntu-latest
+
+    steps:
+      # TODO: remove after v1 is released
+      - uses: actions/checkout@v4
+      - id: fix
+        # TODO: update ref after v1 is released
+        uses: ./
+        with:
+          title: ${{ github.event.pull_request.title }}
+          prefixes: foo,bar,baz
+
+      - if: ${{ steps.fix.outputs.fixed == 'true' }}
+        env:
+          # store the PR number in an environment variable for readability
+          PR_NUM: ${{ github.event.number }}
+
+          # this example uses the `gh` CLI to edit the PR title
+          GH_TOKEN: ${{ github.token }}
+
+        run: gh pr edit "$PR_NUM" --title "${{ steps.fix.outputs.title }}"

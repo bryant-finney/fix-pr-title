@@ -1,12 +1,12 @@
-# Action: PR Titles
+# Fix PR Title V1
 
-[![GitHub Super-Linter](https://github.com/bryant-finney/action-pr-titles/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
-![CI](https://github.com/bryant-finney/action-pr-titles/actions/workflows/ci.yml/badge.svg)
-[![Check dist/](https://github.com/bryant-finney/action-pr-titles/actions/workflows/check-dist.yml/badge.svg)](https://github.com/actions/typescript-action/actions/workflows/check-dist.yml)
-[![CodeQL](https://github.com/bryant-finney/action-pr-titles/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/bryant-finney/action-pr-titles/actions/workflows/codeql-analysis.yml)
+[![GitHub Super-Linter](https://github.com/bryant-finney/fix-pr-title/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
+![CI](https://github.com/bryant-finney/fix-pr-title/actions/workflows/ci.yml/badge.svg)
+[![Check dist/](https://github.com/bryant-finney/fix-pr-title/actions/workflows/check-dist.yml/badge.svg)](https://github.com/actions/typescript-action/actions/workflows/check-dist.yml)
+[![CodeQL](https://github.com/bryant-finney/fix-pr-title/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/bryant-finney/fix-pr-title/actions/workflows/codeql-analysis.yml)
 [![Coverage](./badges/coverage.svg)](./badges/coverage.svg)
 
-Ensure PR titles include well-formatted Jira issue keys.
+This action ensures PR titles include well-formatted Jira issue keys.
 
 > _Created from the_ [`actions/typescript-action`] _template_
 
@@ -14,31 +14,57 @@ Ensure PR titles include well-formatted Jira issue keys.
 
 ## Usage
 
-After testing, you can create version tag(s) that developers can use to
-reference different stable versions of your action. For more information, see
-[Versioning](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
-in the GitHub Actions toolkit.
+An example of a minimal workflow is provided in
+[`.github/workflows/example.yml`](./.github/workflows/example.yml).
 
-To include the action in a workflow in another repository, you can use the
-`uses` syntax with the `@` symbol to reference a specific branch, tag, or commit
-hash.
+1. Ensure the following permissions are set for the job:
 
-```yaml
-steps:
-  - name: Checkout
-    id: checkout
-    uses: actions/checkout@v4
+   ```yaml
+   permissions:
+     pull-requests: write
+   ```
 
-  - name: Test Local Action
-    id: test-action
-    uses: actions/typescript-action@v1 # Commit with the `v1` tag
-    with:
-      milliseconds: 1000
+1. Add the following two steps to a job in your workflow:
 
-  - name: Print Output
-    id: output
-    run: echo "${{ steps.test-action.outputs.time }}"
-```
+   ```yaml
+   - id: fix
+     uses: bryant-finney/fix-pr-title@v1
+     with:
+       # Check (and potentially fix) this string (required)
+       title: ${{ github.event.pull_request.title }}
+
+       # Specify which Jira issue prefixes to enforce (required)
+       prefixes: foo,bar,baz
+
+   # the second step only runs if the first step made changes
+   - if: ${{ steps.fix.outputs.fixed == 'true' }}
+
+     env:
+       # Store the PR number in an environment variable for readability
+       PR_NUM: ${{ github.event.number }}
+
+       # This example uses the `gh` CLI to edit the PR title
+       GH_TOKEN: ${{ github.token }}
+
+     # Apply the fix
+     run: gh pr edit "$PR_NUM" --title "${{ steps.fix.outputs.title }}"
+   ```
+
+### Inputs
+
+See [`action.yml`](./action.yml).
+
+| Name       | Description                                                    | Required |
+| ---------- | -------------------------------------------------------------- | -------- |
+| `title`    | The PR title to check (and potentially fix)                    | Yes      |
+| `prefixes` | A comma-separated list of valid Jira issue prefixes to enforce | Yes      |
+
+### Outputs
+
+| Name    | Description                                                                   |
+| ------- | ----------------------------------------------------------------------------- |
+| `title` | The PR title after applying corrections (might not have changes)              |
+| `fixed` | A string indicating whether the title was fixed (`"true"`) or not (`"false"`) |
 
 ## Contributing
 
@@ -90,10 +116,10 @@ to use it:
 
 ```sh
 # Copy the configuration file to the root of the repository
-cp .vscode/action-pr-titles.code-workspace action-pr-titles.code-workspace
+cp .vscode/fix-pr-title.code-workspace fix-pr-title.code-workspace
 
 # Open the workspace in Visual Studio Code
-code action-pr-titles.code-workspace
+code fix-pr-title.code-workspace
 ```
 
 ### How To
