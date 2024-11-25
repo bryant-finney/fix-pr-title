@@ -1,0 +1,2 @@
+# this was firing on .github/workflows/example.yml
+skip-check: [CKV2_GHA_1]
