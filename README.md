@@ -39,15 +39,17 @@ An example of a minimal workflow is provided in
    # the second step only runs if the first step made changes
    - if: ${{ steps.fix.outputs.fixed == 'true' }}
 
+     # store gh parameters in environment variables (for readability)
      env:
-       # Store the PR number in an environment variable for readability
+       FIXED: ${{ steps.fix.outputs.title }}
        PR_NUM: ${{ github.event.number }}
+       REPO: ${{ github.repository }}
 
-       # This example uses the `gh` CLI to edit the PR title
+       # used by gh to authenticate with the GitHub API
        GH_TOKEN: ${{ github.token }}
 
      # Apply the fix
-     run: gh pr edit "$PR_NUM" --title "${{ steps.fix.outputs.title }}"
+     run: gh pr edit "$PR_NUM" --title "$FIXED" --repo "$REPO"
    ```
 
 ### Inputs

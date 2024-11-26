@@ -2,7 +2,7 @@ name: Example
 on:
   pull_request:
     # trigger this workflow whenever a PR is opened or edited
-    types: [edited, opened]
+    types: [edited, opened, reopened]
 
 jobs:
   example:
@@ -18,15 +18,23 @@ jobs:
       - id: fix
         uses: bryant-finney/fix-pr-title@v1
         with:
+          # Check (and potentially fix) this string (required)
           title: ${{ github.event.pull_request.title }}
+
+          # Specify which Jira issue prefixes to enforce (required)
           prefixes: foo,bar,baz
 
+      # the second step only runs if the first step made changes
       - if: ${{ steps.fix.outputs.fixed == 'true' }}
-        env:
-          # store the PR number in an environment variable for readability
-          PR_NUM: ${{ github.event.number }}
 
-          # this example uses the `gh` CLI to edit the PR title
+        # store gh parameters in environment variables (for readability)
+        env:
+          FIXED: ${{ steps.fix.outputs.title }}
+          PR_NUM: ${{ github.event.number }}
+          REPO: ${{ github.repository }}
+
+          # used by gh to authenticate with the GitHub API
           GH_TOKEN: ${{ github.token }}
 
-        run: gh pr edit "$PR_NUM" --title "${{ steps.fix.outputs.title }}"
+        # Apply the fix
+        run: gh pr edit "$PR_NUM" --title "$FIXED" --repo "$REPO"
