@@ -12,6 +12,8 @@ This action ensures PR titles include well-formatted Jira issue keys.
 
 [`actions/typescript-action`]: https://github.com/actions/typescript-action
 
+![demo.gif](./demo.gif)
+
 ## Usage
 
 An example of a minimal workflow is provided in
