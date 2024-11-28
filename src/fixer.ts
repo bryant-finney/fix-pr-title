@@ -14,7 +14,7 @@ class Fixer {
     this.prefixes = prefixes
     this.raw = raw
     this.re = new RegExp(
-      `(?<![a-z])(${prefixes.join('|')})[^A-Z0-9](\\d+)`,
+      `(?<![a-z])(${prefixes.join('|')})[^A-Z0-9](\\d+)(?![A-Z])`,
       'gi'
     )
   }
