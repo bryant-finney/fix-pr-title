@@ -1,7 +1,7 @@
 {
   "name": "fix-pr-title",
   "description": "Ensure PR titles include well-formatted Jira issue keys.",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "author": "Bryant Finney <bryant.finney@outlook.com>",
   "private": true,
   "homepage": "https://github.com/bryant-finney/fix-pr-title",
