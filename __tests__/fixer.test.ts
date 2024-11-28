@@ -76,6 +76,14 @@ describe('Fixer', () => {
       const fixer = new Fixer(prefixes, `${multi}`.concat(desc))
       expect(fixer.fix()).toEqual('FOO-1234, FOO-5678: Fix a thing')
     })
+
+    it(`enforces word boundaries at the end`, () => {
+      const fixer = new Fixer(
+        prefixes,
+        `${wrong.case}: Fix the bar 2d component`
+      )
+      expect(fixer.fix()).toMatch(/.+bar 2d.+/)
+    })
   })
 })
 
