@@ -25648,7 +25648,7 @@ class Fixer {
     constructor(prefixes, raw) {
         this.prefixes = prefixes;
         this.raw = raw;
-        this.re = new RegExp(`(?<![a-z])(${prefixes.join('|')})[^A-Z0-9](\\d+)`, 'gi');
+        this.re = new RegExp(`(?<![a-z])(${prefixes.join('|')})[^A-Z0-9](\\d+)(?![A-Z])`, 'gi');
     }
     /**
      * Return a single regex match from the PR title.
